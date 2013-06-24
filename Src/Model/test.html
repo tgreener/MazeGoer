@@ -1,0 +1,46 @@
+<html>
+<!DOCTYPE html>
+<head>
+<title>RandoMaze Model Tests</title>
+<script type='text/javascript' src="./maze.js"></script>
+<script type='text/javascript' src="./mazeRoom.js"></script>
+<script type='text/javascript' src="./mazeIterator.js"></script>
+<script type='text/javascript'>
+
+window.onload = function() {
+	var MAZE_SIZE = 5;
+
+	var output = document.getElementById("output");
+	var maze = new Maze(MAZE_SIZE);
+	var depth = maze.getDepth();
+	var deepestRoom = maze.getDeepestRoom();
+	var itr = new MazeIterator(maze);
+	var startRoom = maze.getStartRoom();
+	
+	var mazeDescription = document.createElement("p");
+	mazeDescription.appendChild(document.createTextNode("Maze Size: " + MAZE_SIZE + "x" + MAZE_SIZE));
+	mazeDescription.appendChild(document.createTextNode(" (" + maze.getSize() + " rooms)"));
+	mazeDescription.appendChild(document.createElement("br"));
+	mazeDescription.appendChild(document.createTextNode("Deepest Room: " + deepestRoom.toString()));
+	mazeDescription.appendChild(document.createElement("br"));
+	mazeDescription.appendChild(document.createTextNode("Maze Depth: " + depth));
+
+	var room;
+	while(itr.hasNext()) {
+		room = itr.next();
+
+		mazeDescription.appendChild(document.createElement("br"));
+		mazeDescription.appendChild(document.createTextNode(room.toString()));
+	}
+
+	output.appendChild(mazeDescription);
+}
+
+</script>
+</head>
+<body>
+<aside>
+<span id="output"></span>
+</aside>
+</body>
+</html>

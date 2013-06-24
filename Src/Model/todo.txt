@@ -1,0 +1,5 @@
+To do:
+
+24/5/2013
+-Make Doors in new rooms which lead back to previous rooms.
+-Make iterator handle doors that lead back to previous rooms.
