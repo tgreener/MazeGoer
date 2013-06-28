@@ -4,6 +4,7 @@ var View = cc.Node.extend({
 	walls: 0,
 	objects: 0,
 	text: 0,
+	stairs: 0,
 
 	init: function(room){
 		this._super();
@@ -19,6 +20,10 @@ var View = cc.Node.extend({
 		
 		this.objects = new MazeObjectsLayer();
 		this.objects.init(room.getObject());
+		
+		this.stairs = cc.Sprite.create(s_downstairs);
+		this.stairs.setPosition(winSize.width * 0.33, winSize.height * 0.15);
+		this.stairs.setVisible(false);
 	},
 
 	onEnter: function() {
@@ -28,6 +33,7 @@ var View = cc.Node.extend({
 		this.addChild(this.doors);
 		this.addChild(this.text);
 		this.addChild(this.objects);
+		this.addChild(this.stairs);
 
 		this.updateMazesCleared(0);
 		this.updateKeyCount(0);
@@ -36,6 +42,8 @@ var View = cc.Node.extend({
 	updateRoom: function(room) {
 		this.doors.updateDoors(room.getDoors());
 		this.objects.updateObject(room.getObject());
+		
+		this.stairs.setVisible(room.isDeepest());
 	},
 
 	updateMazesCleared: function(c) {

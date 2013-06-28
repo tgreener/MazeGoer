@@ -7,13 +7,14 @@
         box2d:false,
         chipmunk:false,
         showFPS:false,
-        frameRate:10,
+        frameRate:30,
         loadExtension:true,
-        tag:'gameCanvas', 
+        tag:'gameCanvas',
  
         engineDir:'./Platform/HTML5/cocos2d/',
         appFiles:[
 		'./resources.js',
+		'./Src/Ctrl/EventRegister.js',
 		'./Src/Model/MazeObject.js',
 		'./Src/Model/Key.js',
 		'./Src/Model/mazeRoom.js',
@@ -26,6 +27,7 @@
 		'./Src/View/MazeWallsLayer.js',
 		'./Src/View/MazeObjectsLayer.js',
 		'./Src/View/TextLayer.js',
+		'./Src/View/DownStairs.js',
 		'./Src/View/View.js',
 		'./Src/Ctrl/MazeScene.js'
 	]

@@ -16,6 +16,16 @@ var MazeScene = cc.Scene.extend({
 		director.getKeyboardDispatcher().addDelegate(this);
 		
 		this.schedule(this.update);
+		
+		eventRegister.addEvent("PICKUP_KEY");
+		eventRegister.addEvent("USE_KEY");
+		eventRegister.addEvent("FINISH_MAZE");
+		
+		eventRegister.registerEventHandler("PICKUP_KEY", this.updateKeys.bind(this));
+		eventRegister.registerEventHandler("USE_KEY", this.updateKeys.bind(this));
+		eventRegister.registerEventHandler("FINISH_MAZE", this.finishMaze.bind(this));
+		
+		this.mazeGoer.setEventHandlers();
 	},
 
 	onExit:function() {
@@ -25,30 +35,32 @@ var MazeScene = cc.Scene.extend({
 
 	update:function(dt) {
 		this._super(dt);
-		
-		if(this.mazeGoer.atDeepestRoom()) {
-			this.finishMaze();
-		}
-		
-		this.handleInput();
 
 		this.view.updateRoom(this.mazeGoer.getCurrentPlayerRoom());
+	},
+	
+	updateKeys:function() {
 		this.view.updateKeyCount(this.mazeGoer.getPlayerKeys());
-		this.keyPressed = 0;
+	},
+	
+	updateMazesCleared:function() {
+		this.view.updateMazesCleared(this.mazeGoer.getMazesCleared());
 	},
 
 	finishMaze: function() {
 		this.mazeGoer.playerFinishedMaze();
-		this.keyPressed = 0;
 		
-		this.view.updateMazesCleared(this.mazeGoer.getMazesCleared());
+		this.updateMazesCleared();
+		this.updateKeys();
 	},
 
 	onKeyUp: function(e) {
 		this.keyPressed = e;
+		this.handleKeyboardInput();
+		this.keyPressed = 0;
 	},
 
-	handleInput: function() {
+	handleKeyboardInput: function() {
 		if(this.keyPressed === cc.KEY.up) {
 			this.mazeGoer.go("top");
 		}

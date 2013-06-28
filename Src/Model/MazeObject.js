@@ -1,10 +1,10 @@
 
 var MazeObject = cc.Class.extend(new function() {
-	var objectExists = false;
+	//var objectExists = false;
 	
 	this.interact = function(player) {}
 	this.exists = function() {
-		return objectExists;
+		return false;
 	}
 	
 	this.objectType = function() {

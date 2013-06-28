@@ -23,6 +23,7 @@ var cocos2dApp = cc.Application.extend({
         director = cc.Director.getInstance();
         winSize = director.getWinSize();
         centerPos = cc.p( winSize.width/2, winSize.height/2 );
+        eventRegister = new EventRegister();
         director.runWithScene(new this.startScene());
         return true;
     }
@@ -31,4 +32,5 @@ var cocos2dApp = cc.Application.extend({
 var director;
 var winSize;
 var centerPos;
+var eventRegister;
 var myApp = new cocos2dApp(MazeScene);

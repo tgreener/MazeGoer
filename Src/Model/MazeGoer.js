@@ -13,6 +13,15 @@ var MazeGoer = function() {
 		var mop = new MazeObjectPopulator(maze);
 		mop.populateMaze();
 	}
+	
+	var removeRoomObject = function() {
+		var room = this.getCurrentPlayerRoom();
+		room.setObject(new MazeObject());
+	}
+	
+	this.setEventHandlers = function() {
+		eventRegister.registerEventHandler("PICKUP_KEY", removeRoomObject.bind(this));
+	}
 
 	this.getMazeRoom = function(x, y) {
 		return maze.getRoom(x, y);
@@ -61,11 +70,12 @@ var MazeGoer = function() {
 
 	this.interact = function() {
 		var room = this.getCurrentPlayerRoom();
-		room.getObject().interact(player);
 		
-		if(!room.getObject().exists()) {
-			room.setObject(new MazeObject());
+		if(!room.getObject().exists() && this.atDeepestRoom()) {
+			eventRegister.triggerEvent("FINISH_MAZE");
 		}
+		
+		room.getObject().interact(player);
 	}
 
 	this.go = function(direction) {

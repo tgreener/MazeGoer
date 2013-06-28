@@ -1,11 +1,10 @@
 
 var Key = MazeObject.extend(new function() {
-	objectExists = true;
-
 	this.interact = function(player) {
 			player.pickUpKey();
-			
-			objectExists = false;
+	}
+	this.exists = function() {
+		return true;
 	}
 	
 	this.objectType = function() {

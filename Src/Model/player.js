@@ -26,10 +26,12 @@ var Player = function() {
 	
 	this.pickUpKey = function() {
 		keys++;
+		eventRegister.triggerEvent("PICKUP_KEY");
 	}
 	
 	this.useKey = function() {
 		keys--;
+		eventRegister.triggerEvent("USE_KEY");
 	}
 	
 	this.dropAllKeys = function() {
