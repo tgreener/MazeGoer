@@ -3,12 +3,14 @@ var MazeScene = cc.Scene.extend({
 	mazeGoer: new MazeGoer(),
 	view: 0,
 	keyPressed:0,
+	gameOver: false,
 
 	onEnter:function() {
 		this._super();
 
 		this.view = new View();
-		this.view.init(this.mazeGoer.getCurrentPlayerRoom());
+		this.view.init(this.mazeGoer.getCurrentPlayerRoom(), this.mazeGoer.getStartingStamina());
+		//console.log(this.mazeGoer.getStartingStamina());
 
 		this.addChild(this.view);
 
@@ -20,10 +22,18 @@ var MazeScene = cc.Scene.extend({
 		eventRegister.addEvent("PICKUP_KEY");
 		eventRegister.addEvent("USE_KEY");
 		eventRegister.addEvent("FINISH_MAZE");
+		eventRegister.addEvent("STEP");
+		eventRegister.addEvent("STAM_LOST");
+		eventRegister.addEvent("STAM_GAINED");
+		eventRegister.addEvent("STAM_DEPLETED");
 		
 		eventRegister.registerEventHandler("PICKUP_KEY", this.updateKeys.bind(this));
 		eventRegister.registerEventHandler("USE_KEY", this.updateKeys.bind(this));
 		eventRegister.registerEventHandler("FINISH_MAZE", this.finishMaze.bind(this));
+		eventRegister.registerEventHandler("STAM_LOST", this.updateStaminaBar.bind(this));
+		eventRegister.registerEventHandler("STAM_GAINED", this.updateStaminaBar.bind(this));
+		eventRegister.registerEventHandler("STAM_DEPLETED", this.updateStaminaBar.bind(this));
+		eventRegister.registerEventHandler("STAM_DEPLETED", this.loseGame.bind(this));
 		
 		this.mazeGoer.setEventHandlers();
 	},
@@ -35,8 +45,14 @@ var MazeScene = cc.Scene.extend({
 
 	update:function(dt) {
 		this._super(dt);
-
+		if(this.gameOver) return;
+		
 		this.view.updateRoom(this.mazeGoer.getCurrentPlayerRoom());
+		//console.log(this.mazeGoer.getPlayerStamina());
+	},
+	
+	updateStaminaBar:function() {
+		this.view.updateStaminaBar(this.mazeGoer.getPlayerStamina());
 	},
 	
 	updateKeys:function() {
@@ -53,8 +69,14 @@ var MazeScene = cc.Scene.extend({
 		this.updateMazesCleared();
 		this.updateKeys();
 	},
+	
+	loseGame: function() {
+		this.gameOver = true;
+		this.view.showGameOver();
+	},
 
 	onKeyUp: function(e) {
+		if(this.gameOver) return;
 		this.keyPressed = e;
 		this.handleKeyboardInput();
 		this.keyPressed = 0;

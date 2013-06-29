@@ -3,10 +3,10 @@ var View = cc.Node.extend({
 	doors: 0,
 	walls: 0,
 	objects: 0,
-	text: 0,
+	info: 0,
 	stairs: 0,
 
-	init: function(room){
+	init: function(room, startingStam){
 		this._super();
 
 		this.doors = new MazeDoorsLayer();
@@ -15,8 +15,8 @@ var View = cc.Node.extend({
 		this.walls = new MazeWallsLayer();
 		this.walls.init(cc.c4b(50, 50, 50, 255));
 		
-		this.text = new TextLayer();
-		this.text.init();
+		this.info = new InfoLayer();
+		this.info.init(startingStam);
 		
 		this.objects = new MazeObjectsLayer();
 		this.objects.init(room.getObject());
@@ -31,7 +31,7 @@ var View = cc.Node.extend({
 		
 		this.addChild(this.walls);
 		this.addChild(this.doors);
-		this.addChild(this.text);
+		this.addChild(this.info);
 		this.addChild(this.objects);
 		this.addChild(this.stairs);
 
@@ -47,11 +47,19 @@ var View = cc.Node.extend({
 	},
 
 	updateMazesCleared: function(c) {
-		this.text.clearedMazesLabel.setString("Cleared: " + c);
+		this.info.clearedMazesLabel.setString("Cleared: " + c);
 	},
 
 	updateKeyCount: function(k) {
-		this.text.keysLabel.setString("Keys: " + k);
-	}
+		this.info.keysLabel.setString("Keys: " + k);
+	},
 	
+	showGameOver:function() {
+		this.info.gameOverLabel.setVisible(true);
+	},
+	
+	updateStaminaBar: function(s) {
+		//console.log(s);
+		this.info.playerStam = s;
+	}
 });
