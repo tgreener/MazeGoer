@@ -4,10 +4,12 @@ var InfoLayer = cc.Layer.extend({
 	keysLabel: null,
 	playerStam: null,
 	gameOverLabel: null,
+	MAX_PLAYER_STAM: null,
 
 	init:function(startingStam) {
 		this._super(new cc.c4b(0,0,0,0));
 		this.playerStam = startingStam;
+		this.MAX_PLAYER_STAM = startingStam;
 	},
 
 	onEnter:function() {
@@ -24,7 +26,7 @@ var InfoLayer = cc.Layer.extend({
 
 		this.clearedMazesLabel.setPosition(winSize.width * 0.9375, winSize.height * 0.9444);
 		this.keysLabel.setPosition(winSize.width * 0.9375, winSize.height * 0.88);
-		this.gameOverLabel.setPosition(winSize.width * 0.525, winSize.height * 0.525);
+		this.gameOverLabel.setPosition(new cc.p(winSize.width * 0.525, winSize.height * 0.525));
 		
 		this.addChild(this.clearedMazesLabel);
 		this.addChild(this.keysLabel);
@@ -42,8 +44,7 @@ var InfoLayer = cc.Layer.extend({
 	},
 	
 	drawStaminaBar:function() {
-		var MAX_PLAYER_STAM = 25;
-		var coef = (this.playerStam / MAX_PLAYER_STAM);
+		var coef = (this.playerStam / this.MAX_PLAYER_STAM);
 		
 		var w = winSize.width;
 		var h = winSize.height;

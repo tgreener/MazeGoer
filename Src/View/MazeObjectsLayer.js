@@ -19,19 +19,16 @@ var MazeObjectsLayer = cc.LayerColor.extend({
 	draw:function() {
 		this._super();	
 		this.keySprite.setVisible(this.object.objectType() == 1);
+		
+		if(this.object.objectType() == 2) {
+			cc.renderContext.fillStyle = "#555555";
+			cc.renderContext.strokeStyle = cc.renderContext.fillStyle;
+		
+			cc.drawingUtil.drawCircle(cc.p(0,0), 50, 0, 60, false);
+		}
 	},
 	
 	updateObject: function(o) {
 		this.object = o;
-	},
-	
-	drawKey: function() {
-		//console.log("Drawing Key");		
-		/*cc.renderContext.fillStyle = "#555555";
-		cc.renderContext.strokeStyle = cc.renderContext.fillStyle;
-		
-		cc.drawingUtil.drawCircle(cc.p(0,0), 50, 0, 60, false);*/
-		
-		this.keySprite.setVisible(true);
 	}
 });

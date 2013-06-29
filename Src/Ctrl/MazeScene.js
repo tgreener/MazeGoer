@@ -20,6 +20,7 @@ var MazeScene = cc.Scene.extend({
 		this.schedule(this.update);
 		
 		eventRegister.addEvent("PICKUP_KEY");
+		eventRegister.addEvent("PICKUP");
 		eventRegister.addEvent("USE_KEY");
 		eventRegister.addEvent("FINISH_MAZE");
 		eventRegister.addEvent("STEP");

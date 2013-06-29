@@ -4,6 +4,7 @@ var Player = function() {
 	var mazesCleared = 0;
 	var keys = 0;
 	var stamina = 0;
+	var maxStam = 0;
 
 	this.setCurrentRoom = function(room) {
 		currentRoom = room;
@@ -11,6 +12,7 @@ var Player = function() {
 
 	this.setStamina = function(s) {
 		stamina = s;
+		maxStam = stamina;
 	}
 	
 	this.getStamina = function() {
@@ -29,7 +31,12 @@ var Player = function() {
 	}
 	
 	this.gainStamina = function(s) {
-		stamina += s;
+		if(stamina + s < maxStam) {
+			stamina += s;
+		}
+		else {
+			stamina = maxStam;
+		}
 		eventRegister.triggerEvent("STAM_GAINED");
 	}
 
