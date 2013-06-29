@@ -26,7 +26,7 @@
 		'./Src/View/MazeDoorsLayer.js',
 		'./Src/View/MazeWallsLayer.js',
 		'./Src/View/MazeObjectsLayer.js',
-		'./Src/View/TextLayer.js',
+		'./Src/View/InfoLayer.js',
 		'./Src/View/View.js',
 		'./Src/Ctrl/MazeScene.js'
 	]
