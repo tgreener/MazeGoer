@@ -17,6 +17,7 @@
 		'./Src/Ctrl/EventRegister.js',
 		'./Src/Model/MazeObject.js',
 		'./Src/Model/Key.js',
+		'./Src/Model/Porridge.js',
 		'./Src/Model/mazeRoom.js',
 		'./Src/Model/maze.js',
 		'./Src/Model/mazeIterator.js',

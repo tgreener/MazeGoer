@@ -1,6 +1,6 @@
 
 var Porridge = MazeObject.extend(new function() {
-	var STAM_BOOST = 15;
+	var STAM_BOOST = 10;
 	
 	this.interact = function(player) {
 		player.gainStamina(STAM_BOOST);

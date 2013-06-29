@@ -1,7 +1,7 @@
 
 var MazeGoer = function() {
 	var STEP_COST = 1;
-	var START_STAM = 30;
+	var START_STAM = 20;
 
 	var maze;
 	var player = new Player();
