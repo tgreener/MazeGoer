@@ -93,7 +93,7 @@ var MazeScene = cc.Scene.extend({
 			return;
 		}
 		
-		console.log(touchPoint);
+		//console.log(touchPoint);
 		
 		var topPoint = new cc.p(winSize.width/2, winSize.height * 0.9);
 		var bottomPoint = new cc.p(winSize.width/2, winSize.height * 0.1);
