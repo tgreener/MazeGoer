@@ -16,6 +16,7 @@ var MazeScene = cc.Scene.extend({
 
 		var director = cc.Director.getInstance();
 		director.getKeyboardDispatcher().addDelegate(this);
+		director.getTouchDispatcher().addStandardDelegate(this, 1);
 		
 		this.schedule(this.update);
 		
@@ -81,6 +82,66 @@ var MazeScene = cc.Scene.extend({
 		this.keyPressed = e;
 		this.handleKeyboardInput();
 		this.keyPressed = 0;
+	},
+	
+	onTouchesEnded: function(touches, event) {
+		var touchPoint = touches[0].getLocation();
+		
+		//console.log(touchPoint);
+		
+		var topPoint = new cc.p(winSize.width/2, winSize.height * 0.9);
+		var bottomPoint = new cc.p(winSize.width/2, winSize.height * 0.1);
+		var leftPoint = new cc.p(winSize.width * 0.3, winSize.height/2);
+		var rightPoint = new cc.p(winSize.width * 0.7, winSize.height/2);
+		
+		var distanceBetweenPointsSquared = function(a, b) {
+			return Math.pow((a.x - b.x), 2) + Math.pow((a.y - b.y), 2);
+		}
+		
+		var touchDecision = {
+			name: "",
+			distance: -1
+		}
+		
+		var distanceToTop = distanceBetweenPointsSquared(topPoint, touchPoint);
+		
+		touchDecision.name = "top";
+		touchDecision.distance = distanceToTop;
+		
+		var distanceToBottom = distanceBetweenPointsSquared(bottomPoint, touchPoint);
+		
+		if(distanceToBottom < touchDecision.distance) {
+			touchDecision.name = "bottom";
+			touchDecision.distance = distanceToBottom;
+		}
+		
+		var distanceToLeft = distanceBetweenPointsSquared(leftPoint, touchPoint);
+		
+		if(distanceToLeft < touchDecision.distance) {
+			touchDecision.name = "left";
+			touchDecision.distance = distanceToLeft;
+		}
+		
+		var distanceToRight = distanceBetweenPointsSquared(rightPoint, touchPoint);
+		
+		if(distanceToRight < touchDecision.distance) {
+			touchDecision.name = "right";
+			touchDecision.distance = distanceToRight;
+		}
+		
+		var distanceToCenter = distanceBetweenPointsSquared(centerPos, touchPoint);
+		
+		if(distanceToCenter < touchDecision.distance) {
+			touchDecision.name = "center";
+			touchDecision.distance = distanceToCenter;
+		}
+		
+		if(touchDecision.name === "center") {
+			this.mazeGoer.interact();
+		}
+		else {
+			this.mazeGoer.go(touchDecision.name);
+		}
 	},
 
 	handleKeyboardInput: function() {
