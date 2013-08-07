@@ -86,8 +86,14 @@ var MazeScene = cc.Scene.extend({
 	
 	onTouchesEnded: function(touches, event) {
 		var touchPoint = touches[0].getLocation();
+		//console.log(winSize);
 		
-		//console.log(touchPoint);
+		if(touchPoint.x < 0 || touchPoint.y < 0 ||
+		   touchPoint.x > winSize.width || touchPoint.y > winSize.height) {
+			return;
+		}
+		
+		console.log(touchPoint);
 		
 		var topPoint = new cc.p(winSize.width/2, winSize.height * 0.9);
 		var bottomPoint = new cc.p(winSize.width/2, winSize.height * 0.1);
