@@ -13,7 +13,7 @@ var View = cc.Node.extend({
 		this.doors.init(room.getDoors());
 
 		this.walls = new MazeWallsLayer();
-		this.walls.init(cc.c4b(50, 50, 50, 255));
+		this.walls.init(cc.c4b(40, 40, 40, 255));
 		
 		this.info = new InfoLayer();
 		this.info.init(startingStam);

@@ -10,7 +10,6 @@ var MazeScene = cc.Scene.extend({
 
 		this.view = new View();
 		this.view.init(this.mazeGoer.getCurrentPlayerRoom(), this.mazeGoer.getStartingStamina());
-		//console.log(this.mazeGoer.getStartingStamina());
 
 		this.addChild(this.view);
 

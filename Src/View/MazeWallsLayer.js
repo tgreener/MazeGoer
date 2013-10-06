@@ -1,12 +1,28 @@
 
 var MazeWallsLayer = cc.LayerColor.extend({
 	
+	init:function(params) {
+		this._super(params);
+		
+		this.lvl1RoomSprite = cc.Sprite.create(s_level1_wall_floor);
+		this.lvl1RoomSprite.setPosition(winSize.width * 0.5, winSize.height * 0.5);
+		this.lvl1RoomSprite.setVisible(true);
+	},
+	
+	onEnter:function() {
+		this.addChild(this.lvl1RoomSprite);
+	},
+	
 	draw:function() {
 		this._super()
-		this.dep_drawWalls();
-		this.drawFloor();
+		//this.drawFloor();
+		this.drawWalls();
 
 		/*cc.drawingUtil.drawCircle(cc.p(0,0), 30, 60, true);*/
+	},
+	
+	drawWalls:function() {
+		this.lvl1RoomSprite.setVisible(true);
 	},
 
 	dep_drawWalls:function() {
@@ -31,7 +47,7 @@ var MazeWallsLayer = cc.LayerColor.extend({
 		cc.drawingUtil.drawLine(bottomWall[2], leftWall[3]);
 	},
 
-	drawFloor:function() {
+	dep_drawFloor:function() {
 		cc.renderContext.fillStyle = "#e0e0e0";
 		cc.renderContext.strokeStyle = "rgba(100,100,100,1)";
 
