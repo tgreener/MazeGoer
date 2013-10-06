@@ -10,7 +10,7 @@ var MazeGoer = function() {
 	var generateNewMaze = function(size) {
 		maze = new Maze(size);
 		player.setCurrentRoom(maze.getStartRoom());
-		player.dropAllKeys();
+		//player.dropAllKeys();
 		//console.log(player.getCurrentRoom().toString());
 		//console.log(maze.getSize());
 		
