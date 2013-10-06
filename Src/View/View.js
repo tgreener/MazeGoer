@@ -21,7 +21,7 @@ var View = cc.Node.extend({
 		this.objects = new MazeObjectsLayer();
 		this.objects.init(room.getObject());
 		
-		this.stairs = cc.Sprite.create(s_downstairs);
+		this.stairs = cc.Sprite.create(s_level1_downstairs);
 		this.stairs.setPosition(winSize.width * 0.335, winSize.height * 0.16);
 		this.stairs.setVisible(false);
 	},

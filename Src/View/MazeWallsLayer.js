@@ -3,13 +3,13 @@ var MazeWallsLayer = cc.LayerColor.extend({
 	
 	draw:function() {
 		this._super()
-		this.drawWalls();
+		this.dep_drawWalls();
 		this.drawFloor();
 
 		/*cc.drawingUtil.drawCircle(cc.p(0,0), 30, 60, true);*/
 	},
 
-	drawWalls:function() {
+	dep_drawWalls:function() {
 		cc.renderContext.fillStyle = "#505050";
 		cc.renderContext.strokeStyle = "#505050";
 

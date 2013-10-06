@@ -8,11 +8,11 @@ var MazeObjectsLayer = cc.LayerColor.extend({
 		this._super(cc.c4b(0,0,0,0));
 		this.object = object;
 		
-		this.keySprite = cc.Sprite.create(s_key);
+		this.keySprite = cc.Sprite.create(s_level1_key);
 		this.keySprite.setPosition(winSize.width * 0.5, winSize.height * 0.5);
 		this.keySprite.setVisible(false);
 		
-		this.porridgeSprite = cc.Sprite.create(s_porridge);
+		this.porridgeSprite = cc.Sprite.create(s_level1_porridge);
 		this.porridgeSprite.setPosition(winSize.width * 0.5, winSize.height * 0.5);
 		this.porridgeSprite.setVisible(false);
 	},
