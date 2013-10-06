@@ -7,6 +7,10 @@ var MazeDoorsLayer = cc.LayerColor.extend({
 		var DOOR_POS = 177;
 	
 		this._super(cc.c4b(0,0,0,0));
+		
+		this.locksLayer = new MazeLocksLayer();
+		this.locksLayer.init();
+		
 		this.updateDoors(d);
 		
 		this.topDoorSprite = cc.Sprite.create(s_level1_door);
@@ -31,10 +35,15 @@ var MazeDoorsLayer = cc.LayerColor.extend({
 	},
 
 	onEnter:function() {
+		this._super();
+		
 		this.addChild(this.topDoorSprite);
 		this.addChild(this.bottomDoorSprite);
 		this.addChild(this.leftDoorSprite);
 		this.addChild(this.rightDoorSprite);
+		this.addChild(this.locksLayer);
+		
+		console.log("Maze door layer entered");
 	},
 
 	draw:function() {
@@ -48,7 +57,7 @@ var MazeDoorsLayer = cc.LayerColor.extend({
 		this.leftDoorSprite.setVisible(this.doors.left > 0);
 		this.rightDoorSprite.setVisible(this.doors.right > 0);
 
-		if(this.doors.top == 2) {
+		/*if(this.doors.top == 2) {
 			this.drawTopDoor();
 		}
 		if(this.doors.right == 2) {
@@ -59,7 +68,7 @@ var MazeDoorsLayer = cc.LayerColor.extend({
 		}
 		if(this.doors.left == 2) {
 			this.drawLeftDoor();
-		}
+		}*/
 	},
 	
 	drawTopDoor:function() {
@@ -130,6 +139,7 @@ var MazeDoorsLayer = cc.LayerColor.extend({
 	
 	updateDoors:function(d) {
 		this.doors = d;
+		this.locksLayer.updateLocks(d);
 	},
 
 	doorStyle: function(door) {

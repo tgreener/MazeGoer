@@ -18,6 +18,7 @@ var MazeObjectsLayer = cc.LayerColor.extend({
 	},
 	
 	onEnter:function() {
+		this._super();
 		this.addChild(this.keySprite);
 		this.addChild(this.porridgeSprite);
 	},

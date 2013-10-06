@@ -24,6 +24,7 @@
 		'./Src/Model/MazeObjectPopulator.js',
 		'./Src/Model/player.js',
 		'./Src/Model/MazeGoer.js',
+		'./Src/View/MazeLocksLayer.js',
 		'./Src/View/MazeDoorsLayer.js',
 		'./Src/View/MazeWallsLayer.js',
 		'./Src/View/MazeObjectsLayer.js',
