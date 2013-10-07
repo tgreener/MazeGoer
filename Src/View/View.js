@@ -22,7 +22,7 @@ var View = cc.Node.extend({
 		this.objects.init(room.getObject());
 		
 		this.stairs = cc.Sprite.create(s_level1_downstairs);
-		this.stairs.setPosition(winSize.width * 0.335, winSize.height * 0.16);
+		this.stairs.setPosition(winSize.width * 0.4, winSize.height * 0.5);
 		this.stairs.setVisible(false);
 	},
 

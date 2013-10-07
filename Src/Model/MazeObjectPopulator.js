@@ -29,7 +29,7 @@ var MazeObjectPopulator = function(maze) {
 			var rnd = Maze.randomInteger(0, randBound);
 			//console.log(i);
 			if(allRooms[i].getObject().objectType() == -1) {
-				if(rnd < 54) {
+				if(rnd < 99) {
 					allRooms[i].setObject(new Porridge());
 					randBound = MAX_RAND;
 					//console.log("Porridge here: " + allRooms[i].toString());
