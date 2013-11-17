@@ -35,7 +35,7 @@ var MazeLocksLayer = cc.LayerColor.extend({
 		this.addChild(this.leftLockSprite);
 		this.addChild(this.rightLockSprite);
 		
-		console.log("locks layer entered");
+		//console.log("locks layer entered");
 	},
 	
 	draw:function() {

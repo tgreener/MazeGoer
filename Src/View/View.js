@@ -5,6 +5,7 @@ var View = cc.Node.extend({
 	objects: 0,
 	info: 0,
 	stairs: 0,
+	STAIRS_POS: 0,
 
 	init: function(room, startingStam){
 		this._super();
@@ -22,7 +23,8 @@ var View = cc.Node.extend({
 		this.objects.init(room.getObject());
 		
 		this.stairs = cc.Sprite.create(s_level1_downstairs);
-		this.stairs.setPosition(winSize.width * 0.39, winSize.height * 0.5);
+		this.STAIRS_POS = new cc.Point(winSize.width * 0.39, winSize.height * 0.5);
+		this.stairs.setPosition(this.STAIRS_POS);
 		this.stairs.setVisible(false);
 	},
 
@@ -37,6 +39,29 @@ var View = cc.Node.extend({
 
 		this.updateMazesCleared(0);
 		this.updateKeyCount(0);
+	},
+
+	interactionGeometryAtPoint: function(point) {
+		var stairsGeo = 0;
+		
+		if(this.stairs.isVisible()) {
+			stairsGeo = new MazeObjectGeometryDescription();
+			stairsGeo.init(MazeObjectGeometryDescription.Types.STAIRS, this.STAIRS_POS, point);
+		}
+		
+		var interactiveGeometries = [this.doors.interactionGeometryAtPoint(point), 
+									 this.objects.interactionGeometryAtPoint(point),
+									 stairsGeo];
+		var result = 0;
+		
+		interactiveGeometries.forEach(function(currentGeomDesc) {
+			if(currentGeomDesc != 0 && (result == 0 || currentGeomDesc.getDistance() < result.getDistance())) {
+				result = currentGeomDesc;
+			}
+		});
+		
+//		console.log(result.toString());
+		return result;
 	},
 
 	updateRoom: function(room) {
@@ -54,8 +79,8 @@ var View = cc.Node.extend({
 		this.info.keysLabel.setString("Keys: " + k);
 	},
 	
-	showGameOver:function() {
-		this.info.gameOverLabel.setVisible(true);
+	showGameOver:function(show) {
+		this.info.gameOverLabel.setVisible(show);
 	},
 	
 	updateStaminaBar: function(s) {

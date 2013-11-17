@@ -2,6 +2,7 @@
 var MazeGoer = function() {
 	var STEP_COST = 1;
 	var START_STAM = 100;
+	var INITIAL_MAZE_SIZE = 5;
 
 	var maze;
 	var player = new Player();
@@ -10,7 +11,7 @@ var MazeGoer = function() {
 	var generateNewMaze = function(size) {
 		maze = new Maze(size);
 		player.setCurrentRoom(maze.getStartRoom());
-		//player.dropAllKeys();
+		player.dropAllKeys();
 		//console.log(player.getCurrentRoom().toString());
 		//console.log(maze.getSize());
 		
@@ -30,6 +31,12 @@ var MazeGoer = function() {
 	this.setEventHandlers = function() {		
 		eventRegister.registerEventHandler("PICKUP", removeRoomObject.bind(this));
 		eventRegister.registerEventHandler("STEP", step.bind(this));
+	}
+	
+	this.restart = function() {
+		player = new Player();	
+		player.setStamina(START_STAM);
+		generateNewMaze(INITIAL_MAZE_SIZE);
 	}
 
 	this.getMazeRoom = function(x, y) {
@@ -93,11 +100,15 @@ var MazeGoer = function() {
 		var room = this.getCurrentPlayerRoom();
 		
 		if(!room.getObject().exists() && this.atDeepestRoom()) {
-			eventRegister.triggerEvent("FINISH_MAZE");
-			eventRegister.triggerEvent("STEP");
+			this.descend();
 		}
 		
 		room.getObject().interact(player);
+	}
+	
+	this.descend =  function() {
+		eventRegister.triggerEvent("FINISH_MAZE");
+		eventRegister.triggerEvent("STEP");
 	}
 
 	this.go = function(direction) {
@@ -123,6 +134,6 @@ var MazeGoer = function() {
 		}
 	}
 
-	generateNewMaze(5);
+	generateNewMaze(INITIAL_MAZE_SIZE);
 }
 

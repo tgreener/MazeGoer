@@ -73,11 +73,20 @@ var MazeScene = cc.Scene.extend({
 	
 	loseGame: function() {
 		this.gameOver = true;
-		this.view.showGameOver();
+		this.view.showGameOver(true);
+	},
+	
+	restartGame: function() {
+		this.gameOver = false;
+		this.mazeGoer.restart();
+		
+		this.view.showGameOver(false);		
+		this.updateMazesCleared();
+		this.updateKeys();
+		this.updateStaminaBar();
 	},
 
 	onKeyUp: function(e) {
-		if(this.gameOver) return;
 		this.keyPressed = e;
 		this.handleKeyboardInput();
 		this.keyPressed = 0;
@@ -92,82 +101,58 @@ var MazeScene = cc.Scene.extend({
 			return;
 		}
 		
-		//console.log(touchPoint);
+		if(!this.gameOver) {
+			var geoDesc = this.view.interactionGeometryAtPoint(touchPoint);
 		
-		var topPoint = new cc.p(winSize.width/2, winSize.height * 0.9);
-		var bottomPoint = new cc.p(winSize.width/2, winSize.height * 0.1);
-		var leftPoint = new cc.p(winSize.width * 0.3, winSize.height/2);
-		var rightPoint = new cc.p(winSize.width * 0.7, winSize.height/2);
-		
-		var distanceBetweenPointsSquared = function(a, b) {
-			return Math.pow((a.x - b.x), 2) + Math.pow((a.y - b.y), 2);
-		}
-		
-		var touchDecision = {
-			name: "",
-			distance: -1
-		}
-		
-		var distanceToTop = distanceBetweenPointsSquared(topPoint, touchPoint);
-		
-		touchDecision.name = "top";
-		touchDecision.distance = distanceToTop;
-		
-		var distanceToBottom = distanceBetweenPointsSquared(bottomPoint, touchPoint);
-		
-		if(distanceToBottom < touchDecision.distance) {
-			touchDecision.name = "bottom";
-			touchDecision.distance = distanceToBottom;
-		}
-		
-		var distanceToLeft = distanceBetweenPointsSquared(leftPoint, touchPoint);
-		
-		if(distanceToLeft < touchDecision.distance) {
-			touchDecision.name = "left";
-			touchDecision.distance = distanceToLeft;
-		}
-		
-		var distanceToRight = distanceBetweenPointsSquared(rightPoint, touchPoint);
-		
-		if(distanceToRight < touchDecision.distance) {
-			touchDecision.name = "right";
-			touchDecision.distance = distanceToRight;
-		}
-		
-		var distanceToCenter = distanceBetweenPointsSquared(centerPos, touchPoint);
-		
-		if(distanceToCenter < touchDecision.distance) {
-			touchDecision.name = "center";
-			touchDecision.distance = distanceToCenter;
-		}
-		
-		if(touchDecision.name === "center") {
-			this.mazeGoer.interact();
+			if(geoDesc == 0) {
+				return;
+			}
+			else if(geoDesc.getType() == MazeObjectGeometryDescription.Types.DOOR) {
+				this.mazeGoer.go(geoDesc.getDirection());
+			}
+			else if(geoDesc.getType() == MazeObjectGeometryDescription.Types.KEY) {
+				this.mazeGoer.interact();
+			}
+			else if(geoDesc.getType() == MazeObjectGeometryDescription.Types.FOOD) {
+				this.mazeGoer.interact();			
+			}
+			else if(geoDesc.getType() == MazeObjectGeometryDescription.Types.STAIRS) {
+				this.mazeGoer.descend();
+			}
 		}
 		else {
-			this.mazeGoer.go(touchDecision.name);
+			this.restartGame();
+			return;
 		}
 	},
 
 	handleKeyboardInput: function() {
-		if(this.keyPressed === cc.KEY.up) {
-			this.mazeGoer.go("top");
-		}
+		if(!this.gameOver) {
+			if(this.keyPressed === cc.KEY.up) {
+				this.mazeGoer.go("top");
+			}
 
-		if(this.keyPressed === cc.KEY.right) {
-			this.mazeGoer.go("right");
-		}
+			if(this.keyPressed === cc.KEY.right) {
+				this.mazeGoer.go("right");
+			}
 
-		if(this.keyPressed === cc.KEY.down) {
-			this.mazeGoer.go("bottom");
-		}
+			if(this.keyPressed === cc.KEY.down) {
+				this.mazeGoer.go("bottom");
+			}
 
-		if(this.keyPressed === cc.KEY.left) {
-			this.mazeGoer.go("left");
-		}
+			if(this.keyPressed === cc.KEY.left) {
+				this.mazeGoer.go("left");
+			}
 		
-		if(this.keyPressed === cc.KEY.space) {
-			this.mazeGoer.interact();
-		}	
+			if(this.keyPressed === cc.KEY.space) {
+				this.mazeGoer.interact();
+			}
+		}
+		else {
+			if(this.keyPressed === cc.KEY.space) {
+				this.restartGame();
+				return;
+			}
+		}
 	}
 }); 

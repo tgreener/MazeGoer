@@ -1,5 +1,9 @@
 
 var Maze = function(spaceSize) {
+	// There is a one in this number chance of a
+	// locked door spawning. Must be an integer.
+	var CHANCE_OF_LOCK = Math.round(spaceSize * 0.4);
+
 	var space;
 	var size = 0;
 	var start = [];
@@ -241,12 +245,11 @@ var Maze = function(spaceSize) {
 		var doorType = minVal;
 		
 		if(randomInteger(0, 1) == 1) {
-			var controlNum = 3;
-			var randNum = randomInteger(0, controlNum)
-			doorType = 1;
+			var randNum = randomInteger(0, CHANCE_OF_LOCK)
+			doorType = Maze.DoorStatus.DOOR;
 
-			if(randNum == controlNum) {
-				doorType = 2;
+			if(randNum == CHANCE_OF_LOCK) {
+				doorType = Maze.DoorStatus.LOCKED;
 			}
 		}
 		

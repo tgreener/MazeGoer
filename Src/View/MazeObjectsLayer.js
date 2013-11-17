@@ -1,5 +1,6 @@
 
 var MazeObjectsLayer = cc.LayerColor.extend({
+	OBJECT_POSITION: 0,
 	object: 0,
 	keySprite: 0,
 	porridgeSprite: 0,
@@ -7,13 +8,14 @@ var MazeObjectsLayer = cc.LayerColor.extend({
 	init:function(object) {
 		this._super(cc.c4b(0,0,0,0));
 		this.object = object;
+		this.OBJECT_POSITION = new cc.p(winSize.width * 0.5, winSize.height * 0.5);
 		
 		this.keySprite = cc.Sprite.create(s_level1_key);
-		this.keySprite.setPosition(winSize.width * 0.5, winSize.height * 0.5);
+		this.keySprite.setPosition(this.OBJECT_POSITION);
 		this.keySprite.setVisible(false);
 		
 		this.porridgeSprite = cc.Sprite.create(s_level1_porridge);
-		this.porridgeSprite.setPosition(winSize.width * 0.5, winSize.height * 0.5);
+		this.porridgeSprite.setPosition(this.OBJECT_POSITION);
 		this.porridgeSprite.setVisible(false);
 	},
 	
@@ -38,5 +40,25 @@ var MazeObjectsLayer = cc.LayerColor.extend({
 	
 	updateObject: function(o) {
 		this.object = o;
+	},
+	
+	interactionGeometryAtPoint: function(point) {
+		var result = new MazeObjectGeometryDescription();
+		var location = this.OBJECT_POSITION;
+		var objectType = this.object.objectType();
+		
+		if(objectType == 1) {
+			var type = MazeObjectGeometryDescription.Types.KEY;
+			result.init(type, location, point);
+		}
+		else if(objectType == 2) {
+			var type = MazeObjectGeometryDescription.Types.FOOD;
+			result.init(type, location, point);
+		}
+		else {
+			return 0;
+		}
+		
+		return result;
 	}
 });
