@@ -2,7 +2,7 @@
 var MazeGoer = function() {
 	var STEP_COST = 1;
 	var START_STAM = 100;
-	var INITIAL_MAZE_SIZE = 5;
+	var INITIAL_MAZE_SIZE = 6;
 
 	var maze;
 	var player = new Player();
@@ -93,7 +93,7 @@ var MazeGoer = function() {
 
 	this.playerFinishedMaze = function() {
 		player.clearedMaze();
-		generateNewMaze(5);
+		generateNewMaze(INITIAL_MAZE_SIZE);
 	}
 
 	this.interact = function() {

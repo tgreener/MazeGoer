@@ -2,7 +2,7 @@
 var Maze = function(spaceSize) {
 	// There is a one in this number chance of a
 	// locked door spawning. Must be an integer.
-	var CHANCE_OF_LOCK = Math.round(spaceSize * 0.4);
+	var CHANCE_OF_LOCK = Math.round(spaceSize * 1);
 
 	var space;
 	var size = 0;
